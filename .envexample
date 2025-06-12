@@ -1,0 +1,4 @@
+PORT=5000
+MONGO_URI=mongodb+srv://luigialv674:S2aMN8d4Splf76BG@cluster0.map9et4.mongodb.net/
+JWT_SECRET=your_jwt_secret
+DB_TYPE=TIPO_DE_BASE_DE_DATOS
