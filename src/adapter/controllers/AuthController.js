@@ -1,16 +1,25 @@
 class AuthController {
-  constructor(signInUseCase) {
+  constructor(signInUseCase, refreshTokenUseCase) {
     this.signInUseCase = signInUseCase;
+    this.refreshTokenUseCase = refreshTokenUseCase;
   }
 
-  async signIn(req, res, next) {
+  async signIn(req, res) {
     try {
-      const { username, password } = req.body;
-      const { user, token } = await this.signInUseCase.execute({ username, password });
-      delete user.password;
-      res.json({ user, token });
-    } catch (err) {
-      res.status(401).json({ message: err.message });
+      const result = await this.signInUseCase(req.body);
+      res.json(result);
+    } catch (error) {
+      res.status(401).json({ message: error.message });
+    }
+  }
+
+  async refreshToken(req, res) {
+    try {
+      const { refreshToken } = req.body;
+      const result = await this.refreshTokenUseCase(refreshToken);
+      res.json(result);
+    } catch (error) {
+      res.status(401).json({ message: error.message });
     }
   }
 }
